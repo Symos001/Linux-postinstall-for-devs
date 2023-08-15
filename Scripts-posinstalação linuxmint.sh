@@ -1,77 +1,57 @@
 #!/bin/bash
 
-## Variaveis 
-URL_GOOGLE_CHROME="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
+sudo apt update 
+
+sudo apt upgrade 
+
+#instalando zsh
+
+echo "---> instalando ZSH <---"
+
+sudo apt install zsh
+
+chsh -s $(which zsh)
 
 
 
-DIRETORIO_DOWNLOADS="$HOME/Downloads/programas"
-
-## Removendo Travas do apt ##
 echo "---> REMOVENDO TRAVAS DO APT E HABILITANDO SNAPS <---"
 sudo rm /var/lib/dpkg/lock-frontend; sudo rm/var/cache/apt/archives/lock
 sudo apt install --install-suggests gnome-software
 sudo apt install ubuntu-restricted-extras
-
+sudo rm /etc/apt/preferences.d/nosnap.pref
 
 ## instalando o Snap ##
 sudo apt install snapd
 
-## instalando Gnome ##
-sudo apt install vanilla-gnome-desktop
-## desinstalando o linux mint ##
-sudo apt-get purge cinnamon --auto-remove
-sudo apt remove cinnamon-desktop-environment
-
-## Atualizando o repositório ##
-sudo apt update
-
-## Download de programas externos ##
-
-mkdir "$DIRETORIO_DOWNLOADS"
-wget -c "$URL_GOOGLE_CHROME"       -P "$DIRETORIO_DOWNLOADS"
 
 
-echo "---> Instalando programas <---"
-##Instalando o ambiente de trabalho##
-sudo apt install codeblocks
-sudo apt install vim
+echo "---> INSTALANDO  Snap apps <---"
 
-##Download de Snaps##
+sudo snap install thunderbird
+sudo snap install whatsapp-for-linux
 sudo snap install pycharm-community --classic
 sudo snap install code --classic  
+sudo snap install mysql-workbench-community
 sudo snap install spotify
 sudo apt update
 
-echo "--> Instalando Pacotes MacOS like <--"
-#Instalando apps MacOSlike#
-sudo apt install plank
+echo "---> Instalando apps uteis <--"
 sudo apt install synapse 
+sudo apt install preload
+flatpak install flathub io.github.jeffshee.Hidamari
 
-##instalando temas e icones##
-sudo add-apt-repository ppa:daniruiz/flat-remix -y
-sudo apt update
-sudo apt install flat-remix-gtk -y
+echo "--> Instalando dev thing's <--"
 
-sudo apt update
-
-##instalando Git##
-echo "---> instalando git e pacotes asdf <---"
 sudo apt install git
-
 
 ##instalando build essecial##
 sudo apt install build-essential default-jdk libssl-dev exuberant-ctags ncurses-term ack-grep silversearcher-ag fontconfig imagemagick libmagick libmagickwand-dev software-propeties-common git vim-gtk3 curl -y
 
-
-
-##instalar o asdf##
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.11.3
-echo . "$HOME/.asdf/asdf.sh"
-echo . "$HOME/.asdf/completions/asdf.bash"
 sudo apt update
 
-
+##instalar o asdf##
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.12.0
+. "$HOME/.asdf/asdf.sh"
 
 ##instalando nodejs##
 asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
@@ -108,7 +88,6 @@ asdf install crystal latest
 asdf update
 asdf plugin-update --all
 
-echo "--> instalando bancos de dados e ferramentas <--"
 ##instalando bancos de dados e ferramentas##
 sudo apt-install postgresql-10 postgresql-contrib postgresql-server-dev-10 redis-server libhiredis-dev memcached libmemcached-dev
 
@@ -119,7 +98,29 @@ sudo dpkg-reconfigure mysql-apt-config
 sudo apt update
 sudo apt install mysql-server
 
+##instalando docker##
+sudo apt-get update
+sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(. /etc/os-release; echo "$UBUNTU_CODENAME") stable"
+sudo apt-get update
+sudo apt-get -y install docker-ce docker-compose
+sudo docker --version
 
+
+##instalando tmux##
+sudo apt install tmux
+##instalando tilix##
+sudo apt install tilix bsh
+
+##instalando Xampp e colocando um icone no destop
+wget "https://sourceforge.net/projects/xampp/files/XAMPP%20Linux/7.4.27/xampp-linux-x64-7.4.27-2-installer.run/download" -O xampp-installer.run
+chmod +x xampp-installer.run
+sudo ./xampp-installer.run
+echo -e '[Desktop Entry]\n Version=1.0\n Name=xampp\n Exec=gksudo /opt/lampp/manager-linux-x64.run\n Icon=/opt/lampp/icons/world1.png\n Type=Application\n Categories=Application' | sudo tee /usr/share/applications/xampp.desktop
+sudo apt-get install gksu
+sudo chmod +x /usr/share/applications/xampp.desktop
+cp /usr/share/applications/xampp.desktop  ~/Área\ de\ Trabalho/
 
 
 ##instalando docker##
