@@ -45,9 +45,31 @@ echo "--> Instalando dev thing's <--"
 sudo apt install git
 
 ##instalando build essecial##
-sudo apt install build-essential default-jdk libssl-dev exuberant-ctags ncurses-term ack-grep silversearcher-ag fontconfig imagemagick libmagick libmagickwand-dev software-propeties-common git vim-gtk3 curl -y
+sudo apt install build-essential default-jdk 
+libssl-dev 
+exuberant-ctags 
+ncurses-term 
+ack-grep 
+silversearcher-ag 
+fontconfig 
+imagemagick 
+libmagick 
+libmagickwand-dev 
+software-propeties-common 
+git 
+curl 
+cargo
+npm
+pip
+-y
+##Inatalando NeoVIm##
+echo "<--Instalando Neovim-->"
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+sudo rm -rf /opt/nvim
+sudo tar -C /opt -xzf nvim-linux64.tar.gz
+echo export PATH="$PATH:/opt/nvim-linux64/bin" >> .zshrc
 
-sudo apt update
+LV_BRANCH='release-1.4/neovim-0.9' bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.4/neovim-0.9/utils/installer/install.sh)
 
 ##instalar o asdf##
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.12.0
